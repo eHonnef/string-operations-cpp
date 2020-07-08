@@ -24,13 +24,14 @@ SOFTWARE.
 #ifndef STREXT_H
 #define STREXT_H
 
+#include <iostream>
 #include <regex>
 #include <string>
 #include <vector>
 
 /*
-* Static class StrExt that extends the operations over strings.
-*/
+ * Static class StrExt that extends the operations over strings and vector.
+ */
 class StrExt {
 private:
   // regex for float
@@ -51,6 +52,19 @@ private:
     while (std::getline(ss, item, delim))
       *(result++) = trim(item);
   }
+  /*
+   * Cast std::string val to float
+   */
+  template <typename f> static f str_to_float(const std::string &val) {
+    return std::atof(val.c_str());
+  }
+  /*
+   * Cast float to string.
+   */
+  template <typename f> static std::string float_to_str(const f &val) {
+    return std::to_string(val);
+  }
+  static void print() { std::cout << std::endl; }
 
 public:
   /*
@@ -99,7 +113,7 @@ public:
   /*
    * Returns a vector with the split string.
    */
-  static std::vector<std::string> split(const std::string &s, char delim) {
+  static std::vector<std::string> split(const std::string &s, char delim = ' ') {
     std::vector<std::string> elems;
     split(s, delim, std::back_inserter(elems));
     return elems;
@@ -113,11 +127,11 @@ public:
     return std::find(spl.begin(), spl.end(), word) != spl.end();
   }
   /*
-   * Replace a string toReplace with replaceWith in a copy of s. Returns the replaced string, if not
-   * replaced it'll return the copy of s.
+   * Replace the first occurrence of string toReplace with replaceWith in a copy of s. Returns the
+   * replaced string, if not replaced it'll return the copy of s.
    */
-  static std::string find_replace(const std::string &s, const std::string &toReplace,
-                                 const std::string &replaceWith) {
+  static std::string find_replace_first(const std::string &s, const std::string &toReplace,
+                                        const std::string &replaceWith) {
     std::string str(s);
     std::size_t index = str.find(toReplace);
     if (index != str.npos)
@@ -126,9 +140,25 @@ public:
     return str;
   }
   /*
+   * Replace all occurrence of string toReplace with replaceWith in a copy of s. Returns the
+   * replaced string, if not replaced it'll return the copy of s.
+   */
+  static std::string find_replace_all(const std::string &s, const std::string &toReplace,
+                                      const std::string &replaceWith) {
+    std::string str(s);
+    std::size_t index = str.find(toReplace);
+
+    while (index != str.npos) {
+      str.replace(index, toReplace.length(), replaceWith);
+      index = str.find(toReplace, index);
+    }
+
+    return str;
+  }
+  /*
    * Checks if the term is in s.
    */
-  bool find_term(const std::string &s, const std::string &term) {
+  static bool find_term(const std::string &s, const std::string &term) {
     std::size_t index = s.find(term);
     return (index != s.npos);
   }
@@ -137,25 +167,97 @@ public:
    * E.g.: "   there     is too    much empty space" -> "there-is-too-much-empty-space"
    * or "there is too much empty space".
    */
-  // static std::string reduce(const std::string &str, const std::string &fill,
-  //                           const std::string &whitespace) {
-  //   // trim first
-  //   std::string result = trim(str, whitespace);
+  static std::string reduce(const std::string &str, const std::string &fill = " ",
+                            const std::string &whitespace = " ") {
+    // trim first
+    std::string result = trim(str, whitespace);
 
-  //   // replace sub ranges
-  //   auto beginSpace = result.find_first_of(whitespace);
-  //   while (beginSpace != (int)std::string::npos) {
-  //     const auto endSpace = result.find_first_not_of(whitespace, beginSpace);
-  //     const auto range = endSpace - beginSpace;
+    // replace sub ranges
+    auto beginSpace = result.find_first_of(whitespace);
+    while (beginSpace != std::string::npos) {
+      const auto endSpace = result.find_first_not_of(whitespace, beginSpace);
+      const auto range = endSpace - beginSpace;
 
-  //     result.replace(beginSpace, range, fill);
+      result.replace(beginSpace, range, fill);
 
-  //     const auto newStart = beginSpace + fill.length();
-  //     beginSpace = result.find_first_of(whitespace, newStart);
-  //   }
+      const auto newStart = beginSpace + fill.length();
+      beginSpace = result.find_first_of(whitespace, newStart);
+    }
 
-  //   return result;
-  // }
+    return result;
+  }
+  /*
+   * Removes the begin of a that matches b. Useful for handling paths.
+   * E.g.: "/this/is/a/path/to/something.txt" - "/this/is/a/path/" = "to/something.txt"
+   */
+  static std::string mismatch_string(std::string const &a, std::string const &b) {
+
+    std::pair<std::string::const_iterator, std::string::const_iterator> mismatch_pair;
+
+    std::string::const_iterator longBegin, longEnd, shortBegin;
+
+    if (a.length() >= b.length()) {
+      longBegin = a.begin();
+      longEnd = a.end();
+      shortBegin = b.begin();
+    } else {
+      longBegin = b.begin();
+      longEnd = b.end();
+      shortBegin = a.begin();
+    }
+
+    mismatch_pair = mismatch(longBegin, longEnd, shortBegin);
+    return std::string(mismatch_pair.first, longEnd);
+  }
+
+  /*
+   * Transforms a float (or double, or whatever float it is) to a std::string vector.
+   */
+  template <typename f>
+  static std::vector<std::string> vec_float_to_str(const std::vector<f> &float_v) {
+    std::vector<std::string> strVec(float_v.size());
+
+    std::transform(float_v.begin(), float_v.end(), strVec.begin(), float_to_str<f>);
+
+    return strVec;
+  }
+  /*
+   * Transforms a std::string vector to a float (or double, or whatever float it is).
+   * You need to specify the return type, e.g.: vec_str_to_float<double>(string_vector)
+   */
+  template <typename f>
+  static std::vector<f> vec_str_to_float(const std::vector<std::string> &str_v) {
+    std::vector<f> float_v(str_v.size());
+
+    std::transform(str_v.begin(), str_v.end(), float_v.begin(), str_to_float<f>);
+
+    return float_v;
+  }
+  /*
+   * Returns the index of first occurence of val inside of vec.
+   * If not found, returns -1.
+   */
+  template <typename T> static int indexOf(const std::vector<T> &vec, const T &val) {
+    auto it = std::find(vec.begin(), vec.end(), val);
+
+    if (it == vec.end())
+      return -1;
+
+    return std::distance(vec.begin(), it);
+  }
+  /*
+   * Uses indexOf to check if val is in vec.
+   */
+  template <typename T> static bool contains(const std::vector<T> &vec, const T &val) {
+    return indexOf(vec, val) != -1;
+  }
+  /*
+   * Python-like print.
+   */
+  template <typename T, typename... TAIL> static void print(const T &t, TAIL... tail) {
+    std::cout << t << " ";
+    print(tail...);
+  }
 };
 
 #endif
