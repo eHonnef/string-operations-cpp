@@ -36,6 +36,7 @@ File that contains the test functions to check if everything is working.
 - [print](#print)
 
 ### split
+---
 
 [[Source]](./src/str_extension.cc#L49)
 
@@ -55,6 +56,7 @@ Arguments:
 - `Type`: Out, `Name`: result
 
 ### str_to_float
+---
 
 [[Source]](./src/str_extension.cc#L58)
 
@@ -72,6 +74,7 @@ Arguments:
 - `Type`: std::string, `Name`: val
 
 ### float_to_str
+---
 
 [[Source]](./src/str_extension.cc#L64)
 
@@ -89,6 +92,7 @@ Arguments:
 - `Type`: f, `Name`: val
 
 ### isInt
+---
 
 [[Source]](./src/str_extension.cc#L73)
 
@@ -102,6 +106,7 @@ Arguments:
 - `Type`: std::string, `Name`: val
 
 ### isFloat
+---
 
 [[Source]](./src/str_extension.cc#L77)
 
@@ -115,6 +120,7 @@ Arguments:
 - `Type`: std::string, `Name`: val
 
 ### capitalize
+---
 
 [[Source]](./src/str_extension.cc#L81)
 
@@ -128,6 +134,7 @@ Arguments:
 - `Type`: std::string, `Name`: str
 
 ### check_regex_exp
+---
 
 [[Source]](./src/str_extension.cc#L92)
 
@@ -142,6 +149,7 @@ Arguments:
 - `Type`: std::string, `Name`: exp
 
 ### trim
+---
 
 [[Source]](./src/str_extension.cc#L103)
 
@@ -156,6 +164,7 @@ Arguments:
 - `Type`: std::string, `Name`: whitespace `Default value`: " "
 
 ### split
+---
 
 [[Source]](./src/str_extension.cc#L116)
 
@@ -170,6 +179,7 @@ Arguments:
 - `Type`: char, `Name`: delim `Default value`: ' '
 
 ### find_full_words
+---
 
 [[Source]](./src/str_extension.cc#L124)
 
@@ -184,6 +194,7 @@ Arguments:
 - `Type`: std::string, `Name`: word
 
 ### find_replace_first
+---
 
 [[Source]](./src/str_extension.cc#L133)
 
@@ -199,6 +210,7 @@ Arguments:
 - `Type`: std::string, `Name`: replaceWith
 
 ### find_replace_all
+---
 
 [[Source]](./src/str_extension.cc#L146)
 
@@ -214,6 +226,7 @@ Arguments:
 - `Type`: std::string, `Name`: replaceWith
 
 ### find_term
+---
 
 [[Source]](./src/str_extension.cc#L161)
 
@@ -228,6 +241,7 @@ Arguments:
 - `Type`: std::string, `Name`: term
 
 ### reduce
+---
 
 [[Source]](./src/str_extension.cc#L170)
 
@@ -243,6 +257,7 @@ Arguments:
 - `Type`: std::string, `Name`: whitespace `Default value`: " "
 
 ### mismatch_string
+---
 
 [[Source]](./src/str_extension.cc#L193)
 
@@ -257,6 +272,7 @@ Arguments:
 - `Type`: std::string, `Name`: b
 
 ### vec_float_to_str
+---
 
 [[Source]](./src/str_extension.cc#L218)
 
@@ -274,6 +290,7 @@ Arguments:
 - `Type`: std::vector<f>, `Name`: float_v
 
 ### vec_str_to_float
+---
 
 [[Source]](./src/str_extension.cc#L230)
 
@@ -291,6 +308,7 @@ Arguments:
 - `Type`: std::vector<std::string>, `Name`: str_v
 
 ### indexOf
+---
 
 [[Source]](./src/str_extension.cc#L241)
 
@@ -309,6 +327,7 @@ Arguments:
 - `Type`: T, `Name`: val
 
 ### contains
+---
 
 [[Source]](./src/str_extension.cc#L252)
 
@@ -327,6 +346,7 @@ Arguments:
 - `Type`: T, `Name`: val
 
 ### print
+---
 
 [[Source]](./src/str_extension.cc#L258)
 
