@@ -53,13 +53,13 @@ private:
       *(result++) = trim(item);
   }
   /*
-   * Cast std::string val to float
+   * Cast std::string `val` to float
    */
   template <typename f> static f str_to_float(const std::string &val) {
     return std::atof(val.c_str());
   }
   /*
-   * Cast float to string.
+   * Cast float `val` to std::string.
    */
   template <typename f> static std::string float_to_str(const f &val) {
     return std::to_string(val);
@@ -68,15 +68,15 @@ private:
 
 public:
   /*
-   * Checks if val is a integer.
+   * Checks if `val` is a integer.
    */
   static bool isInt(const std::string &val) { return std::regex_match(val, r_int); }
   /*
-   * Checks if val is any kind of float.
+   * Checks if `val` is any kind of float.
    */
   static bool isFloat(const std::string &val) { return std::regex_match(val, r_float); }
   /*
-   * Capitalize the first char of str.
+   * Capitalize the first char of `str`.
    */
   static std::string capitalize(const std::string &str) {
     std::string a = str;
@@ -84,10 +84,10 @@ public:
     return a;
   }
   /*
-   * Creates a regex expression using the string exp and checks if there is a match in str.
-   * If it throws an exception (problably because your exp was wrong),
+   * Creates a regex expression using the string `exp` and checks if there is a match in `str`.
+   * If it throws an exception (problably because your `exp` was wrong),
    * put the function call in a try/catch and do something like:
-   * catch (std::exception &e) {print(e.what())}
+   * `catch (std::exception &e) {print(e.what())}`
    */
   static bool check_regex_exp(const std::string &str, const std::string &exp) {
     try {
@@ -97,8 +97,8 @@ public:
     }
   }
   /*
-   * Returns the "trimmed" string (can be another char besides whitespace).
-   * E.g.: "    trim me   " -> "trim me".
+   * Returns the "trimmed" `str` (can be another char besides `whitespace`).
+   * `E.g.: "    trim me   " -> "trim me".`
    */
   static std::string trim(const std::string &str, const std::string &whitespace = " ") {
     const auto strBegin = str.find_first_not_of(whitespace);
@@ -111,7 +111,7 @@ public:
     return str.substr(strBegin, strRange);
   }
   /*
-   * Returns a vector with the split string.
+   * Returns a vector with the split string `s` spliting at `delim` char.
    */
   static std::vector<std::string> split(const std::string &s, char delim = ' ') {
     std::vector<std::string> elems;
@@ -119,7 +119,7 @@ public:
     return elems;
   }
   /*
-   * Checks if there is a full word in s.
+   * Checks if there is a full `word` in `s`.
    */
   static bool find_full_words(const std::string &s, const std::string &word) {
     std::vector<std::string> spl = split(s, ' ');
@@ -127,8 +127,8 @@ public:
     return std::find(spl.begin(), spl.end(), word) != spl.end();
   }
   /*
-   * Replace the first occurrence of string toReplace with replaceWith in a copy of s. Returns the
-   * replaced string, if not replaced it'll return the copy of s.
+   * Replace the `first` occurrence of string `toReplace` with `replaceWith` in a copy of `s`.
+   * Returns the replaced string, if not replaced it'll return the copy of `s`.
    */
   static std::string find_replace_first(const std::string &s, const std::string &toReplace,
                                         const std::string &replaceWith) {
@@ -140,8 +140,8 @@ public:
     return str;
   }
   /*
-   * Replace all occurrence of string toReplace with replaceWith in a copy of s. Returns the
-   * replaced string, if not replaced it'll return the copy of s.
+   * Replace `all` occurrence of string `toReplace` with `replaceWith` in a copy of `s`. Returns the
+   * replaced string, if not replaced it'll return the copy of `s`.
    */
   static std::string find_replace_all(const std::string &s, const std::string &toReplace,
                                       const std::string &replaceWith) {
@@ -156,16 +156,16 @@ public:
     return str;
   }
   /*
-   * Checks if the term is in s.
+   * Checks if the `term` is in `s`.
    */
   static bool find_term(const std::string &s, const std::string &term) {
     std::size_t index = s.find(term);
     return (index != s.npos);
   }
   /*
-   * Removes the whitespace (or another char) from str and fill the gap with fill.
-   * E.g.: "   there     is too    much empty space" -> "there-is-too-much-empty-space"
-   * or "there is too much empty space".
+   * Removes the `whitespace` (or another char) from `str` and fill the gap with `fill`.
+   * `E.g.: "   there     is too    much empty space" -> "there-is-too-much-empty-space"
+   * or "there is too much empty space"`.
    */
   static std::string reduce(const std::string &str, const std::string &fill = " ",
                             const std::string &whitespace = " ") {
@@ -187,8 +187,8 @@ public:
     return result;
   }
   /*
-   * Removes the begin of a that matches b. Useful for handling paths.
-   * E.g.: "/this/is/a/path/to/something.txt" - "/this/is/a/path/" = "to/something.txt"
+   * Removes the begin of `a` that matches `b`. Useful for handling paths.
+   * `E.g.: "/this/is/a/path/to/something.txt" - "/this/is/a/path/" = "to/something.txt"`
    */
   static std::string mismatch_string(std::string const &a, std::string const &b) {
 
@@ -211,7 +211,8 @@ public:
   }
 
   /*
-   * Transforms a float (or double, or whatever float it is) to a std::string vector.
+   * Transforms a float (or double, or whatever float it is) vector `float_v` to a std::string
+   * vector.
    */
   template <typename f>
   static std::vector<std::string> vec_float_to_str(const std::vector<f> &float_v) {
@@ -222,8 +223,8 @@ public:
     return strVec;
   }
   /*
-   * Transforms a std::string vector to a float (or double, or whatever float it is).
-   * You need to specify the return type, e.g.: vec_str_to_float<double>(string_vector)
+   * Transforms a std::string vector `str_v` to a float (or double, or whatever float it is).
+   * You need to specify the return type, `e.g.: vec_str_to_float<double>(string_vector)`
    */
   template <typename f>
   static std::vector<f> vec_str_to_float(const std::vector<std::string> &str_v) {
@@ -234,7 +235,7 @@ public:
     return float_v;
   }
   /*
-   * Returns the index of first occurence of val inside of vec.
+   * Returns the index of first occurence of `val` inside of `vec`.
    * If not found, returns -1.
    */
   template <typename T> static int indexOf(const std::vector<T> &vec, const T &val) {
@@ -246,7 +247,7 @@ public:
     return std::distance(vec.begin(), it);
   }
   /*
-   * Uses indexOf to check if val is in vec.
+   * Uses `indexOf` to check if `val` is in `vec`.
    */
   template <typename T> static bool contains(const std::vector<T> &vec, const T &val) {
     return indexOf(vec, val) != -1;
